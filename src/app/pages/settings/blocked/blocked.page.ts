@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-blocked',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./blocked.page.scss'],
 })
 export class BlockedPage implements OnInit {
-
-  constructor() { }
+  language:any;
+  constructor(private translate: TranslateService) { }
 
   ngOnInit() {
   }
-
+  changeLanguage(lan){
+    console.log(lan);
+    this.translate.setDefaultLang(lan);
+  }
 }

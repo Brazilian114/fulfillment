@@ -3,10 +3,26 @@
     <ion-buttons slot="start">
       <ion-back-button [text]="'back_title' | translate" defaultHref="/tabs/profile/settings"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'blocked_title' | translate}}</ion-title>
+    <ion-title>{{'language_title' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-radio-group [(ngModel)]="language" (ionChange)="changeLanguage(language)">
+      <ion-list-header>
+        <ion-label>Language</ion-label>
+      </ion-list-header>
 
+      <ion-item lines="none">
+        <ion-label>English</ion-label>
+        <ion-radio slot="end" value="en"></ion-radio>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label>Russia</ion-label>
+        <ion-radio slot="end" value="ru"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
 </ion-content>

@@ -79,8 +79,8 @@ export class AppComponent implements OnInit {
   * App init
   */
   initializeApp() {
-    this.translate.setDefaultLang('ru');
-    this.fakerService.setLang('ru');
+    this.translate.setDefaultLang('en');
+    this.fakerService.setLang('en');
     this.theme$ = this.store.pipe(select(selectTheme));
 
     this.platform.ready().then(() => {

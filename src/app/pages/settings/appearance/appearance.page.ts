@@ -26,6 +26,8 @@ export class AppearancePage implements OnInit {
     this.subscriptions.add(
       this.theme$.subscribe((isDark) => {
         this.isDark.setValue(isDark);
+        console.log(isDark);
+        
         console.log('Appearance');
       })
     );

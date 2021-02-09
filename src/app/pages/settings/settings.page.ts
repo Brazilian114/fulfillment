@@ -13,7 +13,7 @@ export class SettingsPage implements OnInit {
     { id: 'general', icon: 'settings-outline', link: 'general' },
     { id: 'security', icon: 'lock-closed-outline', link: 'security' },
     { id: 'privacy', icon: 'hand-left-outline', link: 'privacy' },
-    { id: 'blocked', icon: 'people-outline', link: 'blocked' },
+    { id: 'language', icon: 'globe-outline', link: 'blocked' },
     { id: 'balance', icon: 'wallet-outline', link: 'balance' },
     { id: 'subscriptions', icon: 'card-outline', link: 'subscriptions' },
     { id: 'about', icon: 'help-circle-outline', link: 'about' }
