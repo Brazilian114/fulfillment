@@ -23,7 +23,8 @@ import { MusicEffects } from './shared/ngrx/music/music.effects';
 import { SharedModule } from './shared/shared.module';
 import { MusicPlayerComponent } from './shared/components/music-player/music-player.component';
 import { StoriesComponent } from './shared/components/stories/stories.component';
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +66,8 @@ import { StoriesComponent } from './shared/components/stories/stories.component'
     SplashScreen,
     CameraPreview,
     ScreenOrientation,
-
+    Geolocation,    
+    NativeGeocoder,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

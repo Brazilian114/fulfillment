@@ -36,18 +36,26 @@ const routes: Routes = [
           {
             path: 'friends',
             loadChildren: () => import('../pages/friends/friends.module').then(m => m.FriendsPageModule)
+          },
+          {
+            path: 'order-tracking',
+            loadChildren: () => import('../pages/order-tracking/order-tracking.module').then(m => m.OrderTrackingPageModule)
           }
         ]
       },
       // Tab 3
+      // {
+      //   path: 'messages',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: () => import('./message/message.module').then(m => m.MessagePageModule)
+      //     }
+      //   ]
+      // },
       {
-        path: 'messages',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('./message/message.module').then(m => m.MessagePageModule)
-          }
-        ]
+        path: 'delivery',
+        loadChildren: () => import('../pages/delivery/delivery.module').then( m => m.DeliveryPageModule)
       },
       // Tab 4
       {
@@ -85,6 +93,8 @@ const routes: Routes = [
     redirectTo: '/tabs/news',
     pathMatch: 'full'
   }
+  
+  
 ];
 
 @NgModule({

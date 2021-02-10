@@ -15,6 +15,9 @@
   <ion-refresher slot="fixed" style="--ion-text-color: var(--ion-color-medium);" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-down-outline"></ion-refresher-content>
   </ion-refresher>
+  <ion-searchbar  cancelButtonIcon="arrow-back-outline"
+  placeholder="ค้นหา track number" routerLink="order-tracking">
+</ion-searchbar>
   <ion-grid>
     <ion-row class="explore">
       <ion-col size="4" size-md="3" size-xl="2" class="explore-category" *ngFor="let explore of explores">
