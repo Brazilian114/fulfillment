@@ -16,6 +16,8 @@ import { actionSettingsChangeTheme } from './shared/ngrx/settings/settings.actio
 import { FakerService } from './services/faker/faker.service';
 import { AppEventsService } from './services/app-events/app-events.service';
 import { map, take } from 'rxjs/operators';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 
 @Component({
   selector: 'app-root',
@@ -70,7 +72,9 @@ export class AppComponent implements OnInit {
 
     private appEvents: AppEventsService,
     private menu: MenuController,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    public androidPermissions:AndroidPermissions,
+    public locationAccuracy:LocationAccuracy
   ) {
     this.initializeApp();
   }
@@ -87,9 +91,87 @@ export class AppComponent implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.screenOrientation.unlock();
+      // this.setProviders();
+      // this.checkGPSPermission();
     });
   }
+private async checkBackgroundPermission() {
+    try {
+      const result = await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_BACKGROUND_LOCATION);
+      if (!result || result.hasPermission === false) {
+        this.requestPermissions();
+      }
+    } catch (error) {
+      this.requestPermissions();
+    }
+  }
+  checkGPSPermission() {
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+      result => {
+        if (result.hasPermission) {
 
+          //If having permission show 'Turn On GPS' dialogue
+          this.askToTurnOnGPS();
+        } else {
+
+          //If not having permission ask for permission
+          this.requestGPSPermission();
+        }
+      },
+      err => {
+        alert(err);
+      }
+    );
+  }
+  askToTurnOnGPS() {
+    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+      () => {
+        alert("Yeaaaaa")
+        // When GPS Turned ON call method to get Accurate location coordinates
+        // this.getLocationCoordinates()
+      },
+      error => alert('Error requesting location permissions ' + JSON.stringify(error))
+    );
+  }
+  requestGPSPermission() {
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      if (canRequest) {
+        console.log("4");
+      } else {
+        //Show 'GPS Permission Request' dialogue
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+          .then(
+            () => {
+              // call method to turn on GPS
+              this.askToTurnOnGPS();
+            },
+            error => {
+              //Show alert if user click on 'No Thanks'
+              alert('requestPermission Error requesting location permissions ' + error)
+            }
+          );
+      }
+    });
+  }
+  private async requestPermissions() {
+    try {
+      const data = await this.androidPermissions.requestPermissions([
+        "android.permission.ACCESS_BACKGROUND_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION,
+]);
+      if (!data.hasPermission) {
+        throw new Error('No permission');
+      }
+    } catch (error) {
+      // alert("We need background location access in order to continue.")
+      // await this.alertService.showAlert(
+      //   'Background location',
+      //   'We need background location access in order to continue.'
+      // );
+      // this.signOut();
+    }
+  }
   /**
   * Theme toggle
   */

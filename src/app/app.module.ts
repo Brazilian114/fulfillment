@@ -25,6 +25,8 @@ import { MusicPlayerComponent } from './shared/components/music-player/music-pla
 import { StoriesComponent } from './shared/components/stories/stories.component';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +64,8 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
     ])
   ],
   providers: [
+    AndroidPermissions,
+    LocationAccuracy,
     StatusBar,
     SplashScreen,
     CameraPreview,

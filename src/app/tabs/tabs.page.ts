@@ -17,7 +17,7 @@ export class TabsPage implements OnInit, OnDestroy {
   tabs: any[] = [
     { id: 'explore', badge: 0, icon: 'home-outline' },
     { id: 'news', badge: 0, icon: 'compass-outline' },
-    { id: 'delivery', badge: 0, icon: 'chatbubble-outline' },
+    { id: 'delivery', badge: 0, icon: 'navigate-outline' },
     { id: 'notifications', badge: 0, icon: 'notifications-outline' },
     { id: 'profile', badge: 0, icon: 'person-circle-outline' }
   ];

@@ -90,7 +90,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/news',
+    redirectTo: '/tabs/explore',
     pathMatch: 'full'
   }
   

@@ -1,7 +1,8 @@
 import { Component, OnInit , ViewChild, ElementRef, NgZone} from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
-
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 declare var google;
 
 @Component({
@@ -10,7 +11,8 @@ declare var google;
   styleUrls: ['./map.page.scss'],
 })
 export class MapPage implements OnInit {
-  @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
+  // @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
+  @ViewChild('map', { static: false }) mapElement: ElementRef;
   @ViewChild('search', { static: false })
   // @ViewChild('map',  {static: false}) mapElement: ElementRef;
   map: any;
@@ -31,9 +33,9 @@ export class MapPage implements OnInit {
       qty: "10"
     },
     {
-      title: "PSS 2",
-      latitude: "13.595213323541628",
-      longitude: "100.66086097050413",
+      title: "Similan",
+      latitude: "13.665788972830791",
+      longitude: "100.65389651189325",
       qty: "10"
     }
   ];
@@ -43,6 +45,8 @@ export class MapPage implements OnInit {
     private nativeGeocoder: NativeGeocoder,
    // private modalCtrl: ModalController,
     public zone: NgZone,
+    public androidPermissions:AndroidPermissions,
+    public locationAccuracy:LocationAccuracy
     // private mapsAPILoader: MapsAPILoader,
     //public platform: Platform
 ) { 
@@ -60,7 +64,8 @@ export class MapPage implements OnInit {
     // this.loadMap();  
   }
   ionViewDidEnter() {
-    this.loadMap();
+    // this.loadMap();
+    this.checkGPSPermission();
   }
   // async SearchClick()
   // {
@@ -72,35 +77,89 @@ export class MapPage implements OnInit {
   //   });
   //   await modal.present();
   // }
+  checkGPSPermission() {
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+      result => {
+        if (result.hasPermission) {
 
+          //If having permission show 'Turn On GPS' dialogue
+          this.askToTurnOnGPS();
+        } else {
+
+          //If not having permission ask for permission
+          this.requestGPSPermission();
+        }
+      },
+      err => {
+        alert(err);
+      }
+    );
+  }
+  requestGPSPermission() {
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      if (canRequest) {
+        console.log("4");
+      } else {
+        //Show 'GPS Permission Request' dialogue
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+          .then(
+            () => {
+              // call method to turn on GPS
+              this.askToTurnOnGPS();
+            },
+            error => {
+              //Show alert if user click on 'No Thanks'
+              alert('requestPermission Error requesting location permissions ' + error)
+            }
+          );
+      }
+    });
+  }
+  askToTurnOnGPS() {
+    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+      () => {
+        this.loadMap();
+        // alert("Yeaaaaa")
+        // When GPS Turned ON call method to get Accurate location coordinates
+        // this.getLocationCoordinates()
+      },
+      error => alert('Error requesting location permissions ' + JSON.stringify(error))
+    );
+  }
   addInfoWindowToMarker(marker) {
 
-    // console.log(marker);
-    let infoWindowContent = '<div id="content" >' +
-      '<h2 id="firstHeading" class"firstHeading">' + marker.title + '</h2>' +
-      '<p>position : ' + marker.position + '</p>' +
-      '<button ion-button block (click)="openMapsApp()">นำทาง</button>' +
-      '</div>';
-
-    //<button ion-button block (click)="doGetClient()">ลูกค้า</button>
+    var infoWindowContent = '<div id="content"><h1 id="firstHeading" class="firstHeading">' + marker.title + '</h1></div>';
     var infoWindow = new google.maps.InfoWindow({
       content: infoWindowContent
     });
     marker.addListener('click', () => {
-      console.log(marker);
-      // this.loadModal(marker.title);
-      this.closeAllInfoWindows();
-      // infoWindow.open(this.map, marker);
+      infoWindow.open(this.map, marker);
     });
 
-    this.infoWindows.push(infoWindow);
+    // let infoWindowContent = '<div id="content" >' +
+    //   '<h2 id="firstHeading" class"firstHeading">' + marker.title + '</h2>' +
+    //   '<p>Latitude : ' + marker.latitude + '</p>' +
+    //   '<p>Longitude : ' + marker.longitude + '</p>' +
+    //   '</div>';
+
+    // let infoWindow = new google.maps.infoWindow({
+    //   content: infoWindowContent
+    // });
+
+    // marker.addListener('click', () => {
+    //   this.closeAllInfoWindows();
+    //   infoWindow.open(this.map, marker);
+    // });
+    // this.infoWindows.push(infoWindow);
   }
+
 
   closeAllInfoWindows() {
     for (let window of this.infoWindows) {
       window.close();
     }
   }
+
   async loadModal(maker) {
     console.log('loadModal' + maker);
 
@@ -115,40 +174,69 @@ export class MapPage implements OnInit {
 
     //return await modal.present();
   }
-  async loadMap() {
+  loadMap() {
+
+    //FIRST GET THE LOCATION FROM THE DEVICE.
     this.geolocation.getCurrentPosition().then((resp) => {
-
-      this.latitude = resp.coords.latitude;
-      this.longitude = resp.coords.longitude;
-
       let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       let mapOptions = {
         center: latLng,
-        zoom: 12,
-        disableDefaultUI: true,
+        zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
 
-
-
+      //LOAD THE MAP WITH THE PREVIOUS VALUES AS PARAMETERS.
       this.getAddressFromCoords(resp.coords.latitude, resp.coords.longitude);
-
-      this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
-
-      this.addMarkersToMap(this.makers);
-      // this.addMaker(13.580838510900056, 100.6746724531358);
-      this.map.addListener('dragend', () => {
-
-        this.latitude = this.map.center.lat();
-        this.longitude = this.map.center.lng();
-
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      this.map.addListener('tilesloaded', () => {
+        console.log('accuracy', this.map, this.map.center.lat());
         this.getAddressFromCoords(this.map.center.lat(), this.map.center.lng())
+        this.lat = this.map.center.lat()
+        this.long = this.map.center.lng()
       });
-
     }).catch((error) => {
       console.log('Error getting location', error);
     });
   }
+
+//   loadMap() {
+//     this.geolocation.getCurrentPosition().then((resp) => {
+// console.log(resp);
+
+//       this.latitude = resp.coords.latitude;
+//       this.longitude = resp.coords.longitude;
+
+//       let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+//       let mapOptions = {
+//         center: latLng,
+//         zoom: 12,
+//         disableDefaultUI: true,
+//         mapTypeId: google.maps.MapTypeId.ROADMAP
+//       }
+
+//       this.getAddressFromCoords(resp.coords.latitude, resp.coords.longitude);
+
+//       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
+//       // this.addInfoWindowToMarker(this.makers);
+//       // this.addMarker(this.makers);
+//       // 
+//       this.makers.push({'title':"My Location",'latitude':this.latitude,'longitude':this.longitude})
+//       this.addMarkersToMap(this.makers);
+//       // this.addMaker(13.580838510900056, 100.6746724531358);
+//       this.map.addListener('dragend', () => {
+
+//         this.latitude = this.map.center.lat();
+//         this.longitude = this.map.center.lng();
+
+//         this.getAddressFromCoords(this.map.center.lat(), this.map.center.lng())
+//       });
+
+
+
+//     }).catch((error) => {
+//       console.log('Error getting location', error);
+//     });
+//   }  
   addMarker(map) {
 
     let marker = new google.maps.Marker({
@@ -168,11 +256,12 @@ export class MapPage implements OnInit {
       content: content
     });
 
-    // google.maps.event.addListener(marker, 'click', () => {
-    //   infoWindow.open(this.map, marker);
-    // });
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(this.map, marker);
+    });
   }
   addMarkersToMap(markers) {
+    console.log(markers);
 
     for (let marker of markers) {
 
@@ -181,19 +270,43 @@ export class MapPage implements OnInit {
         var position = new google.maps.LatLng(marker.latitude, marker.longitude);
         var dogwalkMarker = new google.maps.Marker({
           position: position,
-          title: marker.title,
-          icon: {
-            url: 'assets/img/markers.png',
-            scaledSize: new google.maps.Size(80, 80)
-          },
+           title: marker.title,
+          icon:{
+            url:'assets/img/markers.png',
+            scaledSize: new google.maps.Size(40, 40),
+   
+        },
+        })
+        google.maps.event.addListener(dogwalkMarker, 'click',  ()=> {
+          console.log(dogwalkMarker);
+          
+          console.log(marker.title);
+          //  this.presentModal(marker.title);
+          // this.navCtrl.navigateForward('parking-details');
+          // this.infowindow.open(marker.title);
+        //   const modal = await this.modalCtrl.create({
+        //     component: MePagePage,
+        //     componentProps: { value: marker.title }
+        //   });
+        //   await modal.present();
         });
-        dogwalkMarker.setMap(this.map);
-        this.addInfoWindowToMarker(dogwalkMarker);
+        
+
       }
-      // dogwalkMarker.setMap(this.map);
-      // this.addInfoWindowToMarker(dogwalkMarker);
+      dogwalkMarker.setMap(this.map);
+      this.addInfoWindowToMarker(dogwalkMarker);
     }
 
+    // for (let marker of markers) {
+    //   var position = new google.maps.LatLng(marker.latitude, marker.longitude);
+    //   var dogwalkMarker = new google.maps.Marker({
+    //     position: position,
+    //     title: marker.name,
+    //     icon: 'assets/img/markers.png'
+    //   });
+    //   dogwalkMarker.setMap(this.map);
+    //   this.addInfoWindowToMarker(dogwalkMarker);
+    // }
   }
 
   UpdateSearchResults() {
@@ -218,7 +331,9 @@ export class MapPage implements OnInit {
     alert(JSON.stringify(item))
     this.placeid = item.place_id
   }
-
+  ShowCords() {
+    alert('lat' + this.lat + ', long' + this.long)
+  }
   ClearAutocomplete() {
     this.autocompleteItems = []
     this.autocomplete.input = ''
@@ -229,10 +344,6 @@ export class MapPage implements OnInit {
       useLocale: true,
       maxResults: 5
     };
-
-    // GoTo(){
-    //   return window.location.href = 'https://www.google.com/maps/search/?api=1&query=Google&query_place_id=' + this.placeid;
-    // }
 
     this.nativeGeocoder.reverseGeocode(lattitude, longitude, options)
       .then((result: NativeGeocoderResult[]) => {
