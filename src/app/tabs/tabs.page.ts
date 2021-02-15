@@ -7,6 +7,8 @@ import { Howl } from 'howler';
 import { MusicController, PlayerEventOptions, initialPlayerEventOptions } from '../services/music-controller/music-controller.service';
 import { MusicPlayerComponent } from '../shared/components/music-player/music-player.component';
 import { AppEventsService } from '../services/app-events/app-events.service';
+import { Storage } from '@ionic/storage';
+import { LoginPage } from '../pages/auth/login/login.page';
 
 @Component({
   selector: 'app-tabs',
@@ -16,7 +18,7 @@ import { AppEventsService } from '../services/app-events/app-events.service';
 export class TabsPage implements OnInit, OnDestroy {
   tabs: any[] = [
     { id: 'explore', badge: 0, icon: 'home-outline' },
-    { id: 'news', badge: 0, icon: 'compass-outline' },
+    { id: 'my_parcels', badge: 0, icon: 'cube-outline' },
     { id: 'delivery', badge: 0, icon: 'navigate-outline' },
     { id: 'notifications', badge: 0, icon: 'notifications-outline' },
     { id: 'profile', badge: 0, icon: 'person-circle-outline' }
@@ -26,6 +28,7 @@ export class TabsPage implements OnInit, OnDestroy {
   player: Howl = null;
   isPlaying = false;
   progress = 0;
+  oUsername='';
   music: PlayerEventOptions = initialPlayerEventOptions;
 
   private subscriptions: SubscriptionLike[] = [];
@@ -34,8 +37,17 @@ export class TabsPage implements OnInit, OnDestroy {
     private menu: MenuController,
     private animationCtrl: AnimationController,
     private modalController: ModalController,
-    private musicController: MusicController
-  ) { }
+    private musicController: MusicController,
+    public storage : Storage,
+    public modalCtrl:ModalController,
+    public LoginPage: LoginPage
+  ) {
+    this.storage.get('_user').then((res) => {
+      this.oUsername = res;
+      console.log(this.oUsername);
+      // this.doGetUser(this.oUsername);
+    });
+   }
 
   /**
    * Toggle music play/pause
@@ -64,10 +76,20 @@ export class TabsPage implements OnInit, OnDestroy {
    * Send event, if user click tab second time or more
    * @param {any} tab - tab object
    */
-  tabClicked(tab) {
-    if (this.activeTab === tab.id) {
-      this.appEvents.tabClicks.next(tab);
+  async tabClicked(tab) {
+    if(this.oUsername == undefined || this.oUsername == ""){
+      const modal = await this.modalCtrl.create({
+        component: LoginPage,
+        componentProps: { value: 123 }
+      });
+  
+      await modal.present();
+    }else{
+      if (this.activeTab === tab.id) {
+        this.appEvents.tabClicks.next(tab);
+      }
     }
+   
   }
 
   /**

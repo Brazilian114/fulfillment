@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavParams, NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-settings',
@@ -19,9 +21,12 @@ export class SettingsPage implements OnInit {
     { id: 'about', icon: 'help-circle-outline', link: 'about' }
   ];
 
-  constructor() { }
+  constructor(public navCtrl:NavController,public storage:Storage) { }
 
   ngOnInit() {
   }
-
+  Logout(){
+    this.navCtrl.navigateRoot("/auth/login");
+    this.storage.remove('_user');
+  }
 }

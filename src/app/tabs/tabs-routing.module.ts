@@ -7,21 +7,21 @@ const routes: Routes = [
     path: 'tabs',
     component: TabsPage,
     children: [
-      // Tab 1
+      // Tab 2
       {
-        path: 'news',
+        path: 'my_parcels',
         children: [
           {
             path: '',
-            loadChildren: () => import('./news/news.module').then(m => m.NewsPageModule)
-          },
-          {
-            path: 'settings',
-            loadChildren: () => import('../pages/settings/settings.module').then(m => m.SettingsPageModule)
+            loadChildren: () => import('./my-parcels/my-parcels.module').then( m => m.MyParcelsPageModule)
           }
         ]
       },
-      // Tab 2
+      // {
+      //   path: 'my-parcels',
+      //   loadChildren: () => import('./my-parcels/my-parcels.module').then( m => m.MyParcelsPageModule)
+      // },
+      // Tab 1
       {
         path: 'explore',
         children: [

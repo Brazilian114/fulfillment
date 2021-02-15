@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouteReuseStrategy } from '@angular/router';
-
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage';
+import { IonicModule, IonicRouteStrategy, NavParams } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { CameraPreview } from '@ionic-native/camera-preview/ngx';
@@ -27,6 +27,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { ServicesComponent } from './pages/settings/notifications/other/services/services.component';
+import { LoginPage } from './pages/auth/login/login.page';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +44,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
     BrowserAnimationsModule,
     HttpClientModule,
     IonicModule.forRoot(),
-
+    IonicStorageModule.forRoot(),
     /* NGX TRANSLATE */
     TranslateModule.forRoot({
       defaultLanguage: 'en',
@@ -72,6 +74,9 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
     ScreenOrientation,
     Geolocation,    
     NativeGeocoder,
+    NavParams,
+    ServicesComponent,
+    LoginPage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

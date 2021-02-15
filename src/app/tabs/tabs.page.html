@@ -22,7 +22,7 @@
   </ion-toolbar>
 
   <ion-tab-bar slot="bottom" class="tab-animate">
-    <ion-tab-button *ngFor="let tab of tabs" [tab]="tab.id" (click)="tabClicked(tab)">
+    <ion-tab-button *ngFor="let tab of tabs" (click)="tabClicked(tab.id)">
       <ion-icon [name]="tab.icon"></ion-icon>
       <ion-label>
         {{tab.id + '_title' | translate}}

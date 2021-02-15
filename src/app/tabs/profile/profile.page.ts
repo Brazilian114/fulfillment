@@ -52,13 +52,13 @@ export class ProfilePage implements OnInit {
     this.getUser();
 
     // Subscribe to tab click event
-    this.subscriptions.push(
-      this.appEvents.onTabClicks.subscribe((tab => {
-        if (tab.id === 'profile') {
-          this.menu.toggle('profile');
-        }
-      }))
-    );
+    // this.subscriptions.push(
+    //   this.appEvents.onTabClicks.subscribe((tab => {
+    //     if (tab.id === 'profile') {
+    //       this.menu.toggle('profile');
+    //     }
+    //   }))
+    // );
   }
 
   ionViewDidEnter() {
