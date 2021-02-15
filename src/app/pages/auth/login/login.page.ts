@@ -66,7 +66,7 @@ export class LoginPage implements OnInit {
           } else {
             oUsername = oUsername.toUpperCase();
             oPassword = oPassword.toUpperCase();
-            this.presentLoading()
+            this.presentLoading();
             this.service.get_login(oUsername, oPassword).then((res) => {
               this.data_logins = res;
               console.log(this.data_logins);
@@ -92,6 +92,7 @@ export class LoginPage implements OnInit {
                 this.storage.ready().then(() => {
                   this.storage.set('_user', oUsername)
                 })
+                this.dismiss();
                 //this.finishLoding();
                 this.navCtrl.navigateRoot("/");
               }

@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [text]="'back_title' | translate" defaultHref="/tabs/profile/settings"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/profile/settings"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'account_title' | translate}}</ion-title>
   </ion-toolbar>
@@ -9,15 +9,23 @@
 
 <ion-content>
   <ion-list>
-    <ion-item button lines="none">
-      <ion-label>Short Name</ion-label>
-      <span slot="end">@user</span>
+    <ion-item  lines="none">
+      <ion-label>ชื่อ</ion-label>
+      <!-- <span slot="end">@user</span> -->
+    </ion-item>
+    <ion-item  lines="none">
+      <ion-label>เบอร์โทรศัพท์</ion-label>
+      <!-- <span slot="end">@user</span> -->
+    </ion-item>
+    <ion-item  lines="none">
+      <ion-label>อีเมล</ion-label>
+      <!-- <span slot="end">@user</span> -->
     </ion-item>
   </ion-list>
 
-  <ion-list>
+  <!-- <ion-list>
     <ion-list-header>
-      <ion-label>Posts on your wall</ion-label>
+      <ion-label>เบอร์โทรศัพท์</ion-label>
     </ion-list-header>
     <ion-item button lines="none">
       <ion-label>Show by default</ion-label>
@@ -27,9 +35,9 @@
       <ion-label>Allow Comments</ion-label>
       <ion-toggle slot="end"></ion-toggle>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
-  <ion-list>
+  <!-- <ion-list>
     <ion-list-header>
       <ion-label>Community Management</ion-label>
     </ion-list-header>
@@ -50,5 +58,5 @@
         Comment Order
       </ion-label>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 </ion-content>

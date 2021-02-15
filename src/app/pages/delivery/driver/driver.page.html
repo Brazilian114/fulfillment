@@ -1,27 +1,43 @@
 <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button text='back' defaultHref="/tabs/delivery"></ion-back-button>
+        <ion-back-button defaultHref="/tabs/delivery"></ion-back-button>
       </ion-buttons>
       <ion-title>driver</ion-title>
     </ion-toolbar>
   </ion-header>
 
 <ion-content>
-    <ion-list lines="none">
-        <ng-container >
-            <!-- <h4 *ngIf="index === 0">Booking</h4> -->
-         
+   
+
           
-          <ion-item button routerLink="map" routerDirection="forward">
+          <ion-item lines="none">
             <!-- <ion-icon color="primary" slot="start" name="set.icon"></ion-icon> -->
-            <ion-label>ระบุตำแหน่งที่เข้ารับ</ion-label>
+            <ion-list>
+              <ion-label>ที่อยู่ผู้เข้ารับ</ion-label>
+              <ion-input type="text"placeholder="ค้นหาตำแหน่งของคุณ" button routerLink="map" routerDirection="forward" readonly style="width:100%"></ion-input>
+              <ion-input type="number"placeholder="บ้านเลขที่"></ion-input>
+              <ion-input type="text"placeholder="ผู้ส่ง"></ion-input>
+              <ion-input type="number"placeholder="เบอร์ติดต่อ"></ion-input>
+            </ion-list>
+           
           </ion-item>
-        </ng-container>
+          <ion-item lines="none">
+            <!-- <ion-icon color="primary" slot="start" name="set.icon"></ion-icon> -->
+            <ion-label>จำนวนชิ้น</ion-label>
+            <ion-input type="number"style="text-align: right;"></ion-input>
+          </ion-item>
+          <ion-item button lines="none">
+            <ion-label>ซื้อบรรจุภัณฑ์</ion-label>
+            <span slot="end">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </span>
+          </ion-item>
+
         <!-- <ion-item-divider></ion-item-divider>
         <ion-item button detail="false" [routerLink]="[ '/auth', 'login' ]" routerDirection="root">
           <ion-label color="danger">test</ion-label>
         </ion-item>
         <ion-item-divider></ion-item-divider> -->
-      </ion-list>
+  
 </ion-content>

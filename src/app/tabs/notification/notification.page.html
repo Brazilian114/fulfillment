@@ -1,25 +1,25 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-buttons slot="start">
+  <ion-toolbar class="ion-text-center">
+    <!-- <ion-buttons slot="start">
       <ion-button>
         <ion-icon slot="icon-only" name="notifications-off-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>
-
-    <ion-segment [formControl]="activeSegment">
+    </ion-buttons> -->
+    <ion-title>{{'notifications_title' | translate}}</ion-title>
+    <!-- <ion-segment [formControl]="activeSegment">
       <ion-segment-button value="feedback">
         {{'notification_feedback_title' | translate}}
       </ion-segment-button>
       <ion-segment-button value="comments">
         {{'notification_comments_title' | translate}}
       </ion-segment-button>
-    </ion-segment>
+    </ion-segment> -->
 
-    <ion-buttons slot="end">
+    <!-- <ion-buttons slot="end">
       <ion-button>
         <ion-icon slot="icon-only" name="options-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 

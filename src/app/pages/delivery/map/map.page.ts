@@ -64,8 +64,8 @@ export class MapPage implements OnInit {
     // this.loadMap();  
   }
   ionViewDidEnter() {
-    // this.loadMap();
-    this.checkGPSPermission();
+    this.loadMap();
+    // this.checkGPSPermission();
   }
   // async SearchClick()
   // {

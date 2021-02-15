@@ -82,9 +82,16 @@ export class TabsPage implements OnInit, OnDestroy {
         component: LoginPage,
         componentProps: { value: 123 }
       });
-  
       await modal.present();
+      const modalData = await modal.onWillDismiss();
+      this.storage.get('_user').then((res) => {
+        this.oUsername = res;
+        console.log(this.oUsername);
+        // this.doGetUser(this.oUsername);
+      });
     }else{
+      console.log(tab);
+      
       if (this.activeTab === tab.id) {
         this.appEvents.tabClicks.next(tab);
       }

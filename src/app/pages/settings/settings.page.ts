@@ -9,15 +9,16 @@ import { Storage } from '@ionic/storage';
 })
 export class SettingsPage implements OnInit {
   settings: any[] = [
-    { id: 'notifications', icon: 'notifications-outline', link: 'notifications' },
+    
     { id: 'account', icon: 'person-outline', link: 'account' },
-    { id: 'appearance', icon: 'color-palette-outline', link: 'appearance' },
-    { id: 'general', icon: 'settings-outline', link: 'general' },
-    { id: 'security', icon: 'lock-closed-outline', link: 'security' },
-    { id: 'privacy', icon: 'hand-left-outline', link: 'privacy' },
+    // { id: 'notifications', icon: 'notifications-outline', link: 'notifications' },
+    { id: 'my_address', icon: 'map-outline', link: 'appearance' },
+    { id: 'receiver_address', icon: 'navigate-outline', link: 'general' },
+    // { id: 'security', icon: 'lock-closed-outline', link: 'security' },
+    // { id: 'privacy', icon: 'hand-left-outline', link: 'privacy' },
     { id: 'language', icon: 'globe-outline', link: 'blocked' },
-    { id: 'balance', icon: 'wallet-outline', link: 'balance' },
-    { id: 'subscriptions', icon: 'card-outline', link: 'subscriptions' },
+    // { id: 'balance', icon: 'wallet-outline', link: 'balance' },
+    // { id: 'subscriptions', icon: 'card-outline', link: 'subscriptions' },
     { id: 'about', icon: 'help-circle-outline', link: 'about' }
   ];
 

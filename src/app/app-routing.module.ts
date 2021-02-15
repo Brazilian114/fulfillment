@@ -26,6 +26,7 @@ const routes: Routes = [
     path: 'delivery',
     loadChildren: () => import('./pages/delivery/delivery.module').then( m => m.DeliveryPageModule)
   }
+
   
 ];
 @NgModule({

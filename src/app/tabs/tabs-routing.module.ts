@@ -40,6 +40,18 @@ const routes: Routes = [
           {
             path: 'order-tracking',
             loadChildren: () => import('../pages/order-tracking/order-tracking.module').then(m => m.OrderTrackingPageModule)
+          },
+          {
+            path: 'check-price',
+            loadChildren: () => import('../pages/check-price/check-price.module').then( m => m.CheckPricePageModule)
+          },
+          {
+            path: 'delivery',
+            loadChildren: () => import('../pages/delivery/delivery.module').then( m => m.DeliveryPageModule)
+          },
+          {
+            path: 'my-parcels',
+            loadChildren: () => import('./my-parcels/my-parcels.module').then( m => m.MyParcelsPageModule)
           }
         ]
       },
@@ -71,12 +83,12 @@ const routes: Routes = [
       {
         path: 'profile',
         children: [
+          // {
+          //   path: '',
+          //   loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule)
+          // },
           {
             path: '',
-            loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule)
-          },
-          {
-            path: 'settings',
             loadChildren: () => import('../pages/settings/settings.module').then(m => m.SettingsPageModule)
           }
         ]

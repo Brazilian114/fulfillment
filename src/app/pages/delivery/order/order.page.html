@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button text='back' defaultHref="/tabs/delivery"></ion-back-button>
+        <ion-back-button  defaultHref="/tabs/delivery"></ion-back-button>
       </ion-buttons>
       <ion-title>Order</ion-title>
     </ion-toolbar>
@@ -9,4 +9,30 @@
 
 <ion-content>
 
+    <ion-item button lines="none">
+      <ion-label>ผู้ส่ง</ion-label>
+      <!-- <span slot="end">@user</span> -->
+    </ion-item>
+
+    <ion-list-header>
+      <ion-label>ที่อยู่ผู้รับ</ion-label>
+    </ion-list-header>
+    
+    <ion-item button lines="none" class="ion-text-center">
+      <ion-label>เลือกที่อยู่</ion-label>
+      <!-- <ion-toggle slot="end"></ion-toggle> -->
+    </ion-item>
+
+  <ion-item button lines="none">
+    <ion-label>ซื้อบรรจุภัณฑ์</ion-label>
+    <span slot="end">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </span>
+  </ion-item>
+  <ion-item button lines="none">
+    <ion-label>ลายละเอียดเพิ่มเติม</ion-label>
+    <span slot="end">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </span>
+  </ion-item>
 </ion-content>

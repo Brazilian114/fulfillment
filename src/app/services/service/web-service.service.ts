@@ -12,9 +12,9 @@ export class WebServiceService {
   constructor(public storage:Storage,public http:HttpClient) { 
 
 
-      this.hostWebService = "http://192.168.1.252/RF-Service_FulFillment/RFService.asmx";
+      // this.hostWebService = "http://192.168.1.252/RF-Service_FulFillment/RFService.asmx";
       
-      // this.hostWebService = "http://58.137.91.7/RF-Service_Yasub/RFService.asmx";
+      this.hostWebService = "http://203.150.244.167/rf-service_anajak/RFService.asmx";
 
   }
   get_login(Username, Password) {
