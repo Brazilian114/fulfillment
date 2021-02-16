@@ -3,13 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button  defaultHref="/tabs/news"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">Check Price</ion-title>
+    <ion-title class="ion-text-center">เช็คราคาพัสดุ</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-item lines="none"> 
+  <ion-item lines="none" [routerLink]="[ '/search-location' ]"> 
     <ion-label>ที่อยู่ผู้ส่ง</ion-label> 
     <ion-select> 
     <!-- <ion-select-option value="light">Light</ion-select-option> 
@@ -35,7 +35,7 @@
         <ion-grid>
           <ion-row class="ion-text-center">
             <ion-col size="3">
-              <ion-label fixed>ยาว</ion-label>
+              <ion-label fixed>กว้าง</ion-label>
               <ion-input type="number"  placeholder="CM"></ion-input>
             </ion-col>
             <ion-col size="1" style="display: flex !important;
@@ -45,7 +45,7 @@
               X
             </ion-col>
             <ion-col size="3">
-              <ion-label fixed>กว้าง</ion-label>
+              <ion-label fixed>ยาว</ion-label>
               <ion-input type="number"  placeholder="CM"></ion-input>
             </ion-col>
             <ion-col size="1" style="display: flex !important;

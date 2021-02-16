@@ -43,7 +43,16 @@ const routes: Routes = [
           },
           {
             path: 'check-price',
+            children: [
+          {
+            path: '',
             loadChildren: () => import('../pages/check-price/check-price.module').then( m => m.CheckPricePageModule)
+          },
+          {
+            path: 'search-location',
+            loadChildren: () => import('../search-location/search-location.module').then(m => m.SearchLocationPageModule)
+          }
+        ]
           },
           {
             path: 'delivery',

@@ -42,6 +42,7 @@ export class LoginPage implements OnInit {
   // }
 
   ngOnInit(): void {
+    this.getApi();
     this.login = this.fb.group({
       email: this.fb.control('', [
         Validators.required,
@@ -146,6 +147,15 @@ export class LoginPage implements OnInit {
     });
     alert.present();
   }
+  getApi(){
+    this.service.GetLocation().subscribe(data=>{
+      console.log(data);
+      
+    })
+  
+  }
+
+
   finishLoding() {
     this.loader.dismiss();
   }

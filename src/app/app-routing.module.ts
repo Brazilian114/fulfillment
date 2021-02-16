@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'delivery',
     loadChildren: () => import('./pages/delivery/delivery.module').then( m => m.DeliveryPageModule)
+  },
+  {
+    path: 'search-location',
+    loadChildren: () => import('./search-location/search-location.module').then( m => m.SearchLocationPageModule)
   }
 
   
